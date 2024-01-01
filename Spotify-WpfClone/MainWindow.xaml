@@ -5,8 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Spotify_WpfClone"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Spotify" 
+        Height="881" 
+        Width="1553"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        MouseDown="Window_MouseDown"
+        Icon="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\spotify.png"
+        AllowsTransparency="True"
+        Background="Transparent">
+    
+    <!--  page  -->
+    <Border Background="#000000">
 
-    </Grid>
+        <StackPanel>
+            
+        </StackPanel>
+        
+    </Border>
+
 </Window>
