@@ -17,10 +17,15 @@
         ResizeMode="CanResize"
         MouseDown="Window_MouseDown">
 
+    <Window.Resources>
+        <FontFamily x:Key="Roboto-Regular" >D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Fonts\Roboto-Regular.ttf#Roboto</FontFamily>
+        <FontFamily x:Key="Roboto-Bold" >D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Fonts\Roboto-Bold.ttf#Roboto</FontFamily>
+    </Window.Resources>
+
     <Window.DataContext>
         <viewModel:MainWindowModelView/>
     </Window.DataContext>
-    
+
     <WindowChrome.WindowChrome>
         <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0"/>
     </WindowChrome.WindowChrome>
@@ -181,7 +186,7 @@
                 </Button>
 
             </Grid>
-            
+
             <!--  Content  -->
             <Grid Margin="9 41 9 10">
 
@@ -190,23 +195,122 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                
+
                 <!--  left list  -->
                 <StackPanel>
-                    
+
                     <!--  menu items  -->
                     <Border Background="#121212"
                             Height="120"
-                            CornerRadius="10">
+                            CornerRadius="10"
+                            Margin="0 0 0 10">
 
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
+
+                            <!--  Home  -->
+                            <RadioButton >
+                                <RadioButton.Style>
+                                    <Style TargetType="ToggleButton">
+                                        <Style.Setters>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="RadioButton">
+                                                        <StackPanel VerticalAlignment="Stretch"
+                                                                    HorizontalAlignment="Stretch"
+                                                                    Orientation="Horizontal"
+                                                                    Background="{TemplateBinding Background}">
+
+                                                            <Image x:Name="ButtonImage" 
+                                                                   Source="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\home.png"
+                                                                   Height="27"
+                                                                   Margin="20 0 20 0"
+                                                                   HorizontalAlignment="Left"
+                                                                   VerticalAlignment="Center"/>
+
+                                                            <TextBlock Text="Home"
+                                                                       Foreground="White"
+                                                                       FontSize="17"
+                                                                       FontWeight="Bold"
+                                                                       FontFamily="{StaticResource Roboto-Bold}"
+                                                                       VerticalAlignment="Center"/>
+
+                                                        </StackPanel>
+
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsChecked" Value="True">
+                                                                <Setter TargetName="ButtonImage" Property="Source" Value="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\homed.png"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+
+                                            <Setter Property="Background" Value="Transparent"/>
+                                        </Style.Setters>
+                                    </Style>
+                                </RadioButton.Style>
+                                
+                            </RadioButton>
+
+                            <!--  Search  -->
+                            <RadioButton Grid.Row="1">
+                                <RadioButton.Style>
+                                    <Style TargetType="ToggleButton">
+                                        <Style.Setters>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="RadioButton">
+                                                        <StackPanel VerticalAlignment="Stretch"
+                                                                    HorizontalAlignment="Stretch"
+                                                                    Orientation="Horizontal"
+                                                                    Background="{TemplateBinding Background}">
+
+                                                            <Image x:Name="ButtonImage" 
+                                                                   Source="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\search.png"
+                                                                   Height="27"
+                                                                   Margin="20 0 20 0"
+                                                                   HorizontalAlignment="Left"
+                                                                   VerticalAlignment="Center"/>
+
+                                                            <TextBlock Text="Search"
+                                                                       Foreground="White"
+                                                                       FontSize="17"
+                                                                       FontWeight="Bold"
+                                                                       FontFamily="{StaticResource Roboto-Bold}"
+                                                                       VerticalAlignment="Center"/>
+
+                                                        </StackPanel>
+
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsChecked" Value="True">
+                                                                <Setter TargetName="ButtonImage" Property="Source" Value="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\searched.png"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+
+                                            <Setter Property="Background" Value="Transparent"/>
+                                        </Style.Setters>
+                                    </Style>
+                                </RadioButton.Style>
+                                
+                            </RadioButton>
+                            
                         </Grid>
                     </Border>
-                    
+
+                    <Border Background="#121212"
+                            Height="500"
+                            CornerRadius="10">
+                        
+                    </Border>
                 </StackPanel>
 
                 <GridSplitter BorderThickness="10" BorderBrush="White"/>
