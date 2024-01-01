@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:Spotify_WpfClone"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        
     </Application.Resources>
 </Application>

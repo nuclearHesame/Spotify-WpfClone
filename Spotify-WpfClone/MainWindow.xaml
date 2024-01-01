@@ -4,24 +4,216 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Spotify_WpfClone"
+        xmlns:viewModel="clr-namespace:Spotify_WpfClone.MVVM.ViewModel"
         mc:Ignorable="d"
         Title="Spotify" 
-        Height="881" 
-        Width="1553"
-        WindowStyle="None"
+        Height="800" 
+        Width="1500"
         WindowStartupLocation="CenterScreen"
-        MouseDown="Window_MouseDown"
         Icon="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\spotify.png"
+         WindowStyle="None"
         AllowsTransparency="True"
-        Background="Transparent">
+        Background="Transparent"
+        ResizeMode="CanResize"
+        MouseDown="Window_MouseDown">
+
+    <Window.DataContext>
+        <viewModel:MainWindowModelView/>
+    </Window.DataContext>
     
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="0" CornerRadius="0" CaptionHeight="0"/>
+    </WindowChrome.WindowChrome>
+
     <!--  page  -->
     <Border Background="#000000">
+        <Grid>
 
-        <StackPanel>
+            <!--  Title Bar  -->
+            <Grid Height="31"
+              VerticalAlignment="Top">
+
+                <!--  Buttons  -->
+                <StackPanel HorizontalAlignment="Right"
+                        Height="31"
+                        Background="Transparent"
+                        Orientation="Horizontal">
+
+                    <!--minimize Button-->
+                    <Button HorizontalAlignment="Right"
+                        Command="{Binding MinimizeButtonClick}">
+                        <Button.Style>
+                            <Style TargetType="Button">
+
+                                <Style.Setters>
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Width" Value="45"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <Border Background="{TemplateBinding Background}" >
+
+                                                    <Image Source="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\minimize.png"
+                                                   Height="12"/>
+
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style.Setters>
+
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#3f3f3f"/>
+                                    </Trigger>
+                                </Style.Triggers>
+
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                    <!--maximize & Restre Down Button-->
+                    <Button HorizontalAlignment="Right"
+                        Command="{Binding MaximizeButtonClick}">
+                        <Button.Style>
+                            <Style TargetType="Button">
+
+                                <Style.Setters>
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Width" Value="45"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <Border Background="{TemplateBinding Background}" >
+
+                                                    <Image Source="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\maximize.png"
+                                                   Height="14"/>
+
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style.Setters>
+
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#3f3f3f"/>
+                                    </Trigger>
+                                </Style.Triggers>
+
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                    <!--Close Button-->
+                    <Button HorizontalAlignment="Right" 
+                        Command="{ Binding CloseButtonClick}">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Style.Setters>
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Width" Value="45"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <Border Background="{TemplateBinding Background}" >
+
+                                                    <Image Source="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\close.png"
+                                                   Height="15"/>
+
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style.Setters>
+
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#cd1a2b"/>
+                                    </Trigger>
+                                </Style.Triggers>
+
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                </StackPanel>
+
+                <!--  Menu Button  -->
+                <Button HorizontalAlignment="Left"
+                    Margin="10 0 0 0">
+
+                    <Button.Style>
+                        <Style TargetType="Button">
+
+                            <Style.Setters>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Width" Value="45"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <Border Background="{TemplateBinding Background}" >
+
+                                                <Image Source="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\menu.png"
+                                                    Height="30"/>
+
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style.Setters>
+
+                            <Style.Triggers>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#3f3f3f"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="False">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                </Trigger>
+                            </Style.Triggers>
+
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+            </Grid>
             
-        </StackPanel>
-        
+            <!--  Content  -->
+            <Grid Margin="9 41 9 10">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <!--  left list  -->
+                <StackPanel>
+                    
+                    <!--  menu items  -->
+                    <Border Background="#121212"
+                            Height="120"
+                            CornerRadius="10">
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                        </Grid>
+                    </Border>
+                    
+                </StackPanel>
+
+                <GridSplitter BorderThickness="10" BorderBrush="White"/>
+                <GridSplitter Grid.Column="1" BorderThickness="10" BorderBrush="White"/>
+            </Grid>
+
+        </Grid>
     </Border>
 
 </Window>

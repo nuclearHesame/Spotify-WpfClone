@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spotify_WpfClone.MVVM.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,11 +24,13 @@ namespace Spotify_WpfClone
         public MainWindow()
         {
             InitializeComponent();
+
+            this.DataContext = new MainWindowModelView();
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if(e.LeftButton == MouseButtonState.Pressed)
             {
                 DragMove();
             }
