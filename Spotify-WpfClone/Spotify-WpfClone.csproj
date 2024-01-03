@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="MVVM\View\" />
     <Folder Include="MVVM\Model\" />
+    <Folder Include="Themes\" />
   </ItemGroup>
 
 </Project>

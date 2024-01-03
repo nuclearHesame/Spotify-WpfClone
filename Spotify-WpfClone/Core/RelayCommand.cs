@@ -5,23 +5,29 @@ namespace Spotify_WpfClone.Core
 {
     public class RelayCommand : ICommand
     {
-        private readonly Action _action;
+        private Action<object> _execute;
+        private Func<object, bool> _canExecute;
 
-        public RelayCommand(Action action)
+        public event EventHandler CanExecuteChanged
         {
-            _action = action;
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
+        {
+            _execute = execute;
+            _canExecute = canExecute;
         }
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            return _canExecute == null || _canExecute(parameter);
         }
 
         public void Execute(object parameter)
         {
-            _action();
+            _execute(parameter);
         }
-
-        public event EventHandler CanExecuteChanged;
     }
 }

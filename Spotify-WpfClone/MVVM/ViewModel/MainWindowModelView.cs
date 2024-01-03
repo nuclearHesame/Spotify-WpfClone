@@ -1,18 +1,36 @@
 ﻿using Spotify_WpfClone.Core;
+using Spotify_WpfClone.MVVM.View;
 using System;
 using System.Windows;
 using System.Windows.Input;
 
 namespace Spotify_WpfClone.MVVM.ViewModel
 {
-    public class MainWindowModelView  
+    public class MainWindowModelView : ObservableObject
     {
-        public WindowState MainWindowState { get; set; }
+        public HomeViewModel HomeVM { get; set; }
+        public SearchViewModel SearchVM { get; set; }
 
-        public ICommand CloseButtonClick { get; private set; }
-        public ICommand MinimizeButtonClick { get; private set; }
-        public ICommand MaximizeButtonClick { get; private set; }
-        
+        private WindowState MainWindowState { get; set; }
+
+        public ICommand CloseButtonClick { get; }
+        public ICommand MinimizeButtonClick { get; }
+        public ICommand MaximizeButtonClick { get; }
+        public RelayCommand HomeViewCommand { get; }
+        public RelayCommand SearchViewCommand { get; }
+
+        private object _currentView;
+
+        public object CurrentView
+        {
+            get { return _currentView; }
+            set
+            {
+                _currentView = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public MainWindowModelView()
         {
@@ -20,22 +38,38 @@ namespace Spotify_WpfClone.MVVM.ViewModel
             MinimizeButtonClick = new RelayCommand(MinimizeButton);
             MaximizeButtonClick = new RelayCommand(MaximizeButton);
 
-            MainWindowState= WindowState.Normal;
+            HomeVM = new HomeViewModel();
+            SearchVM = new SearchViewModel();
+            CurrentView = HomeVM;
+
+            HomeViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = HomeVM;
+            });
+            SearchViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = SearchVM;
+            });
+
+
+            MainWindowState = WindowState.Normal;
         }
 
-        public void CloseButton()
+        #region Buttons
+
+        public void CloseButton(object obj)
         {
             Environment.Exit(0);
         }
 
-        private void MinimizeButton()
+        private void MinimizeButton(object obj)
         {
             Application.Current.MainWindow.WindowState = WindowState.Minimized;
         }
 
-        private void MaximizeButton()
+        private void MaximizeButton(object obj)
         {
-            if(MainWindowState == WindowState.Normal)
+            if (MainWindowState == WindowState.Normal)
             {
                 Application.Current.MainWindow.WindowState = WindowState.Maximized;
             }
@@ -46,5 +80,7 @@ namespace Spotify_WpfClone.MVVM.ViewModel
 
             MainWindowState = Application.Current.MainWindow.WindowState;
         }
+
+        #endregion
     }
 }

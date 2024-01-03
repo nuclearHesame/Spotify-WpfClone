@@ -18,7 +18,7 @@
         MouseDown="Window_MouseDown">
 
     <Window.Resources>
-        <FontFamily x:Key="Roboto-Regular" >D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Fonts\Roboto-Regular.ttf#Roboto</FontFamily>
+        <FontFamily x:Key="Roboto-Regular">D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Fonts\Roboto-Regular.ttf#Roboto</FontFamily>
         <FontFamily x:Key="Roboto-Bold" >D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Fonts\Roboto-Bold.ttf#Roboto</FontFamily>
     </Window.Resources>
 
@@ -188,15 +188,15 @@
             </Grid>
 
             <!--  Content  -->
-            <Grid Margin="9 41 9 10">
+            <Grid Margin="9 41 9 87">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2*"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <!--  left list  -->
+                <!--  left items  -->
                 <StackPanel>
 
                     <!--  menu items  -->
@@ -204,7 +204,6 @@
                             Height="120"
                             CornerRadius="10"
                             Margin="0 0 0 10">
-
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
@@ -212,10 +211,12 @@
                             </Grid.RowDefinitions>
 
                             <!--  Home  -->
-                            <RadioButton >
+                            <RadioButton Command="{Binding HomeViewCommand}"
+                                         IsChecked="True">
                                 <RadioButton.Style>
                                     <Style TargetType="ToggleButton">
                                         <Style.Setters>
+                                            <Setter Property="Foreground" Value="#b3b3b3"/>
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="RadioButton">
@@ -232,7 +233,7 @@
                                                                    VerticalAlignment="Center"/>
 
                                                             <TextBlock Text="Home"
-                                                                       Foreground="White"
+                                                                       Foreground="{TemplateBinding Foreground}"
                                                                        FontSize="17"
                                                                        FontWeight="Bold"
                                                                        FontFamily="{StaticResource Roboto-Bold}"
@@ -243,6 +244,11 @@
                                                         <ControlTemplate.Triggers>
                                                             <Trigger Property="IsChecked" Value="True">
                                                                 <Setter TargetName="ButtonImage" Property="Source" Value="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\homed.png"/>
+                                                                <Setter Property="Foreground" Value="#ffffff"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="ButtonImage" Property="Source" Value="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\home-hover.png"/>
+                                                                <Setter Property="Foreground" Value="#ffffff"/>
                                                             </Trigger>
                                                         </ControlTemplate.Triggers>
 
@@ -254,14 +260,16 @@
                                         </Style.Setters>
                                     </Style>
                                 </RadioButton.Style>
-                                
+
                             </RadioButton>
 
                             <!--  Search  -->
-                            <RadioButton Grid.Row="1">
+                            <RadioButton Grid.Row="1"
+                                         Command="{Binding SearchViewCommand}">
                                 <RadioButton.Style>
                                     <Style TargetType="ToggleButton">
                                         <Style.Setters>
+                                            <Setter Property="Foreground" Value="#b3b3b3" />
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="RadioButton">
@@ -278,7 +286,7 @@
                                                                    VerticalAlignment="Center"/>
 
                                                             <TextBlock Text="Search"
-                                                                       Foreground="White"
+                                                                       Foreground="{TemplateBinding Foreground}"
                                                                        FontSize="17"
                                                                        FontWeight="Bold"
                                                                        FontFamily="{StaticResource Roboto-Bold}"
@@ -289,6 +297,11 @@
                                                         <ControlTemplate.Triggers>
                                                             <Trigger Property="IsChecked" Value="True">
                                                                 <Setter TargetName="ButtonImage" Property="Source" Value="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\searched.png"/>
+                                                                <Setter Property="Foreground" Value="#ffffff"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="ButtonImage" Property="Source" Value="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\search-hover.png"/>
+                                                                <Setter Property="Foreground" Value="#ffffff"/>
                                                             </Trigger>
                                                         </ControlTemplate.Triggers>
 
@@ -300,21 +313,27 @@
                                         </Style.Setters>
                                     </Style>
                                 </RadioButton.Style>
-                                
+
                             </RadioButton>
-                            
+
                         </Grid>
                     </Border>
 
                     <Border Background="#121212"
-                            Height="500"
+                            Height="600"
                             CornerRadius="10">
-                        
+
                     </Border>
                 </StackPanel>
 
-                <GridSplitter BorderThickness="10" BorderBrush="White"/>
-                <GridSplitter Grid.Column="1" BorderThickness="10" BorderBrush="White"/>
+                <GridSplitter BorderThickness="0.3" BorderBrush="Gray"/>
+
+                <ContentControl Grid.Column="1"
+                                Content="{Binding CurrentView}">
+                    
+                </ContentControl>
+                
+                <GridSplitter BorderThickness="0.3" BorderBrush="Gray" Grid.Column="1" />
             </Grid>
 
         </Grid>
