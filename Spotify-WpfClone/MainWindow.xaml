@@ -45,8 +45,8 @@
                         Orientation="Horizontal">
 
                     <!--minimize Button-->
-                    <Button HorizontalAlignment="Right"
-                        Command="{Binding MinimizeButtonClick}">
+                    <Button x:Name="btn_Minimize"
+                            Click="btn_Minimize_Click">
                         <Button.Style>
                             <Style TargetType="Button">
 
@@ -79,8 +79,8 @@
                     </Button>
 
                     <!--maximize & Restre Down Button-->
-                    <Button HorizontalAlignment="Right"
-                        Command="{Binding MaximizeButtonClick}">
+                    <Button x:Name="btn_Maximize"
+                            Click="btn_Maximize_Click">
                         <Button.Style>
                             <Style TargetType="Button">
 
@@ -113,8 +113,8 @@
                     </Button>
 
                     <!--Close Button-->
-                    <Button HorizontalAlignment="Right" 
-                        Command="{ Binding CloseButtonClick}">
+                    <Button x:Name="btn_Close"
+                            Click="btn_Close_Click">
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Style.Setters>
@@ -149,7 +149,7 @@
 
                 <!--  Menu Button  -->
                 <Button HorizontalAlignment="Left"
-                    Margin="10 0 0 0">
+                        Margin="10 0 0 0">
 
                     <Button.Style>
                         <Style TargetType="Button">
@@ -196,14 +196,19 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <!--  left items  -->
-                <StackPanel>
+                <!--  left side menu  -->
+                <Grid Margin="0 0 10 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                    <!--  menu items  -->
+                    <!--  Buttons items  -->
                     <Border Background="#121212"
                             Height="120"
                             CornerRadius="10"
-                            Margin="0 0 0 10">
+                            Margin="0 0 0 10"
+                            VerticalAlignment="Top">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
@@ -319,21 +324,84 @@
                         </Grid>
                     </Border>
 
+                    <!--  Artists Playlists Podcasts  -->
                     <Border Background="#121212"
-                            Height="600"
+                            Grid.Row="1"
                             CornerRadius="10">
 
                     </Border>
-                </StackPanel>
 
-                <GridSplitter BorderThickness="0.3" BorderBrush="Gray"/>
+                </Grid>
 
+                <GridSplitter BorderThickness="5" 
+                              BorderBrush="Transparent"/>
+
+                <!--  Content Vation  -->
                 <ContentControl Grid.Column="1"
+                                Margin="0 0 10 0"
                                 Content="{Binding CurrentView}">
-                    
+
                 </ContentControl>
-                
-                <GridSplitter BorderThickness="0.3" BorderBrush="Gray" Grid.Column="1" />
+
+                <GridSplitter BorderThickness="5" 
+                              BorderBrush="Transparent" 
+                              Grid.Column="1" />
+
+                <!--  Now Playing View  -->
+                <Border Background="#121212"
+                        Grid.Column="2"
+                        CornerRadius="10">
+                    <Grid>
+
+                        <!--  Top name & Close Button  -->
+                        <Grid VerticalAlignment="Top"
+                              Margin="20 15 15 0">
+
+                            <TextBlock x:Name="txb_ArtistName" 
+                                       Text="Fadaei"
+                                       Foreground="#ffffff"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       FontSize="15"
+                                       FontFamily="{StaticResource Roboto-Bold}"/>
+
+                            <Button HorizontalAlignment="Right">
+
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Style.Setters>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border Background="{TemplateBinding Background}" 
+                                                                Padding="9"
+                                                                CornerRadius="100">
+                                                            
+                                                            <Image Source="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\close.png"
+                                                                   Height="16" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style.Setters>
+
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#232323"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+
+                            </Button>
+
+                        </Grid>
+
+                    </Grid>
+                </Border>
+
             </Grid>
 
         </Grid>

@@ -6,11 +6,18 @@
              xmlns:local="clr-namespace:Spotify_WpfClone.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="672" d:DesignWidth="741"
-             Background="DarkGreen">
-    <Grid>
-        <TextBlock Text="Home" FontSize="40"/>
-        <TextBlock Text="HOme" FontSize="40"
-                   HorizontalAlignment="Right"
-                   VerticalAlignment="Bottom"/>
-    </Grid>
+             Background="Transparent">
+
+    <Border CornerRadius="10">
+        
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#972a23" Offset="0" x:Name="Gradient_up"/>
+                <GradientStop Color="#121212" Offset="0.6"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        
+        
+        
+    </Border>
 </UserControl>
