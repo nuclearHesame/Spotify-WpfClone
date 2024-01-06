@@ -1,6 +1,7 @@
 ﻿using Spotify_WpfClone.Core;
 using Spotify_WpfClone.MVVM.View;
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -8,6 +9,7 @@ namespace Spotify_WpfClone.MVVM.ViewModel
 {
     public class MainWindowModelView : ObservableObject
     {
+
         public HomeViewModel HomeVM { get; set; }
         public SearchViewModel SearchVM { get; set; }
 
@@ -41,6 +43,5 @@ namespace Spotify_WpfClone.MVVM.ViewModel
                 CurrentView = SearchVM;
             });
         }
-
     }
 }

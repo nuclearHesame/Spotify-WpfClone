@@ -26,11 +26,23 @@
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="TextDecorations" Value="Underline"/>
-                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Cursor" Value="Hand"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
-        
+
+        <!--  Artist TextBlock  -->
+        <Style x:Key="Artist_TextBlock" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#b3b3b3"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="TextDecorations" Value="Underline"/>
+                    <Setter Property="Foreground" Value="#ffffff"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
     </Window.Resources>
 
     <Window.DataContext>
@@ -164,34 +176,31 @@
 
                     <Button.Style>
                         <Style TargetType="Button">
-
                             <Style.Setters>
-                                <Setter Property="Background" Value="Transparent"/>
-                                <Setter Property="Width" Value="45"/>
-                                <Setter Property="BorderThickness" Value="0"/>
                                 <Setter Property="Template">
                                     <Setter.Value>
-                                        <ControlTemplate>
-                                            <Border Background="{TemplateBinding Background}" >
+                                        <ControlTemplate TargetType="Button">
+                                            
+                                            <StackPanel >
 
-                                                <Image Source="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\menu.png"
-                                                    Height="30"/>
+                                                <Image x:Name="ButtonImage" 
+                                                       Source="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\menu-hover.png"
+                                                       Height="30"/>
 
-                                            </Border>
+                                            </StackPanel>
+
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter TargetName="ButtonImage"
+                                                            Property="Source"
+                                                            Value="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\menu.png"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
                             </Style.Setters>
-
-                            <Style.Triggers>
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter Property="Background" Value="#3f3f3f"/>
-                                </Trigger>
-                                <Trigger Property="IsPressed" Value="False">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                </Trigger>
-                            </Style.Triggers>
-
                         </Style>
                     </Button.Style>
                 </Button>
@@ -204,7 +213,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition x:Name="cold_NowPlayingView" Width="353"/>
                 </Grid.ColumnDefinitions>
 
                 <!--  left side menu  -->
@@ -354,92 +363,105 @@
 
                 </ContentControl>
 
-                <GridSplitter BorderThickness="5" 
+                <GridSplitter x:Name="grds_NPVSplitter"
+                              BorderThickness="5" 
                               BorderBrush="Transparent" 
                               Grid.Column="1" />
 
                 <!--  Now Playing View  -->
-                <Border Background="#121212"
+                <Border x:Name="grd_NowPlayingView"
+                        Background="#121212"
                         Grid.Column="2"
-                        CornerRadius="10">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
+                        CornerRadius="10"
+                        MouseEnter="grd_NowPlayingView_MouseEnter"
+                        MouseLeave="grd_NowPlayingView_MouseLeave">
 
-                        <!--  Top name & Close Button  -->
-                        <Grid VerticalAlignment="Top"
-                              Margin="20 15 15 20">
+                    <ScrollViewer x:Name="sclv_NPV" VerticalScrollBarVisibility="Visible" >
+                        <Grid>
 
-                            <TextBlock x:Name="txb_ArtistName" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!--  Top name & Close Button  -->
+                            <Grid VerticalAlignment="Top"
+                                  Margin="20 15 0 20">
+
+                                <!--  Artist Name  -->
+                                <TextBlock x:Name="txb_ArtistName" 
                                        Text="Fadaei"
                                        Foreground="#ffffff"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Center"
                                        FontWeight="Bold"
-                                       FontSize="15"
+                                       FontSize="16"
+                                       Style="{StaticResource Underliner}"
                                        FontFamily="{StaticResource Roboto-Bold}"/>
 
-                            <Button HorizontalAlignment="Right">
+                                <!--  NPV Close  -->
+                                <Button x:Name="btn_NPVClose"
+                                    Click="btn_NPVClose_Click"
+                                    HorizontalAlignment="Right">
 
-                                <Button.Style>
-                                    <Style TargetType="Button">
-                                        <Style.Setters>
-                                            <Setter Property="Background" Value="Transparent"/>
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="Button">
-                                                        <Border Background="{TemplateBinding Background}" 
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Style.Setters>
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="Button">
+                                                            <Border Background="{TemplateBinding Background}" 
                                                                 Padding="9"
                                                                 CornerRadius="100">
 
-                                                            <Image Source="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\close.png"
+                                                                <Image Source="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\close.png"
                                                                    Height="16" />
-                                                        </Border>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style.Setters>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style.Setters>
 
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Background" Value="#232323"/>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#232323"/>
+                                                    <Setter Property="Cursor" Value="Hand"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
 
-                            </Button>
+                                </Button>
 
-                        </Grid>
+                            </Grid>
 
-                        <!--  Image  -->
-                        <Grid Grid.Row="1"
-                              Margin="15 0 15 0">
-                            <Border Name="Mask"
-                                        Background="#121212"
-                                        CornerRadius="10">
-                            </Border>
-                            <StackPanel>
-                                <Image Source="C:\Users\Danesh_Group\Pictures\profile\photo_2022-09-28_23-17-59.jpg" />
-                                <StackPanel.OpacityMask>
-                                    <VisualBrush Visual="{Binding ElementName=Mask}" />
-                                </StackPanel.OpacityMask>
-                            </StackPanel>
-                        </Grid>
+                            <!--  Image  -->
+                            <Grid Grid.Row="1"
+                              Margin="15 0 0 0">
+                                <Border Name="Mask"
+                                    Background="#121212"
+                                    CornerRadius="10">
+                                </Border>
+                                <StackPanel>
+                                    <Image Source="C:\Users\Danesh_Group\Pictures\profile\photo_2022-09-28_23-17-59.jpg" />
+                                    <StackPanel.OpacityMask>
+                                        <VisualBrush Visual="{Binding ElementName=Mask}" />
+                                    </StackPanel.OpacityMask>
+                                </StackPanel>
+                            </Grid>
 
-                        <!--  Artist & Name & Music option -->
-                        <Grid Grid.Row="2"
-                              Margin="15 20 15 0">
+                            <!--  Artist & Name & Music option -->
+                            <Grid Grid.Row="2"
+                              Margin="15 10 0 0">
 
-                            <!--  Name  -->
-                            <StackPanel>
+                                <!--  Names  -->
+                                <StackPanel>
 
-                                <TextBlock x:Name="txb_TrackName" 
-                                           Text="Mohajer"
+                                    <TextBlock x:Name="txb_TrackName" 
+                                           Text="Tavaf"
                                            Foreground="#ffffff"
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Center"
@@ -448,21 +470,248 @@
                                            Style="{StaticResource Underliner}"
                                            FontFamily="{StaticResource Roboto-Bold}"/>
 
-                                <TextBlock x:Name="txb_ArtistName2" 
-                                           Text="Fadaei"
-                                           Foreground="#b3b3b3"
+                                    <TextBlock x:Name="txb_ArtistName2" 
+                                           Text="Fadaei, Mostafa Miri"
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Center"
                                            FontWeight="Bold"
                                            FontSize="15"
-                                           Style="{StaticResource Underliner}"
-                                           FontFamily="{StaticResource Roboto-Bold}"/>
-                            
-                            </StackPanel>
+                                           FontFamily="{StaticResource Roboto-Bold}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" Value="#b3b3b3"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="TextDecorations" Value="Underline"/>
+                                                        <Setter Property="Foreground" Value="#ffffff"/>
+                                                        <Setter Property="Cursor" Value="Hand"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
 
+                                </StackPanel>
+
+                                <!--  add and menu  -->
+                                <StackPanel HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            Orientation="Horizontal">
+
+                                    <!--  NPV add  -->
+                                    <Button x:Name="btn_NPVAdd">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Style.Setters>
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Button">
+                                                                
+                                                                <StackPanel HorizontalAlignment="Center"
+                                                                            VerticalAlignment="Center">
+                                                                    
+                                                                    <Image x:Name="ButtonImage" 
+                                                                           Source="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\add.png"
+                                                                           Height="21"/>
+                                                                
+                                                                </StackPanel>
+
+                                                                <ControlTemplate.Triggers>
+                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                        <Setter TargetName="ButtonImage" 
+                                                                                Property="Source" 
+                                                                                Value="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\add-hover.png"/>
+                                                                    </Trigger>
+                                                                </ControlTemplate.Triggers>
+
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style.Setters>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+
+                                    <!--  NPV menu  -->
+                                    <Button x:Name="btn_NPVMenu"
+                                            Margin="10 0 0 0">
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Style.Setters>
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="Button">
+                                                                
+                                                                <StackPanel HorizontalAlignment="Center"
+                                                                            VerticalAlignment="Center">
+                                                                    
+                                                                    <Image x:Name="ButtonImage" 
+                                                                           Source="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\menu.png"
+                                                                           Height="25"/>
+                                                                    
+                                                                </StackPanel>
+
+                                                                <ControlTemplate.Triggers>
+                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                        <Setter TargetName="ButtonImage" 
+                                                                                Property="Source" 
+                                                                                Value="D:\MyAPP\Project\WPF\Spotify-WpfClone\Spotify-WpfClone\Resources\Images\MainPage\menu-hover.png"/>
+                                                                    </Trigger>
+                                                                </ControlTemplate.Triggers>
+
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style.Setters>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+
+                                </StackPanel>
+
+                            </Grid>
+                            
+                            <!--  About Artist  -->
+                            <Border Grid.Row="3"
+                                    Background="#242424"
+                                    Margin="15 20 0 0"
+                                    CornerRadius="10">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition />
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!--  Artist Image  -->
+                                    <Border Name="Mask2"
+                                            Background="#242424"
+                                            CornerRadius="11 11 0 0"/>
+                                    <StackPanel Background="Transparent"
+                                                VerticalAlignment="Top">
+                                        <Image  Source="C:\Users\Danesh_Group\Pictures\fadaei.jpg" >
+                                            <Image.OpacityMask>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.5">
+                                                    <GradientStop Color="Black" Offset="1.1"/>
+                                                    <GradientStop Color="Transparent" Offset="0"/>
+                                                </LinearGradientBrush>
+                                            </Image.OpacityMask>
+                                        </Image>
+                                        <StackPanel.OpacityMask>
+                                            <VisualBrush Visual="{Binding ElementName=Mask2}" />
+                                        </StackPanel.OpacityMask>
+                                    </StackPanel>
+                                    
+                                    <!--  About the artist text  -->
+                                    <TextBlock Text="About the artist"
+                                               Foreground="White"
+                                               FontSize="15"
+                                               FontWeight="Bold"
+                                               Margin="15 20 0 0"
+                                               VerticalAlignment="Top"
+                                               HorizontalAlignment="Left"
+                                               FontFamily="{StaticResource Roboto-Bold}"/>
+
+                                    <!--  About the artist  -->
+                                    <Grid Grid.Row="1" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        
+                                        <!--  Artist Name  -->
+                                        <TextBlock Margin="20 20 20 10"
+                                                   Text="Fadaei"
+                                                   Foreground="#ffffff"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   FontWeight="Bold"
+                                                   FontSize="20"
+                                                   Style="{StaticResource Underliner}"
+                                                   FontFamily="{StaticResource Roboto-Bold}"/>
+
+                                        <!--  listeners & follow  -->
+                                        <Grid Grid.Row="1"
+                                              Margin="20 0 20 20">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>  
+                                            
+                                            <!--  Monthly Listeners  -->
+                                            <TextBlock Margin="0"
+                                                       TextWrapping="Wrap"
+                                                       MaxWidth="171.84"
+                                                       MaxHeight="18.0033333333333"
+                                                       Text="35,864 Monthly Listeners"
+                                                       Foreground="#b3b3b3"
+                                                       VerticalAlignment="Center"
+                                                       FontSize="15"
+                                                       HorizontalAlignment="Left"
+                                                       Style="{StaticResource Underliner}"
+                                                       FontFamily="{StaticResource Roboto-Bold}"/>
+
+                                            <!--  Follow Button  -->
+                                            <Button HorizontalAlignment="Center"
+                                                    Content="Follow"
+                                                    Margin="0"
+                                                    Grid.Column="1">
+                                                <Button.Style>
+                                                    <Style TargetType="Button">
+                                                        <Style.Setters>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="FontSize" Value="15"/>
+                                                            <Setter Property="FontWeight" Value="Bold"/>
+                                                            <Setter Property="BorderThickness" Value="0.5"/>
+                                                            <Setter Property="BorderBrush" Value="#b3b3b3"/>
+                                                            <Setter Property="Template">
+                                                                <Setter.Value>
+                                                                    <ControlTemplate TargetType="Button">
+                                                                        <Border Background="Transparent" 
+                                                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                                                CornerRadius="15"
+                                                                                Padding="15 5 15 5">
+
+                                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                        </Border>
+                                                                    </ControlTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </Style.Setters>
+
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="BorderBrush" Value="White"/>
+                                                                <Setter Property="BorderThickness" Value="0.9"/>
+                                                                <Setter Property="FontSize" Value="15.5"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
+                                            
+                                        </Grid>
+                                        
+                                    </Grid>
+
+                                    <TextBlock Grid.Row="2"
+                                               Text="About the artist"
+                                               Foreground="White"
+                                               FontSize="15"
+                                               FontWeight="Bold"
+                                               Margin="15 20 0 0"
+                                               VerticalAlignment="Top"
+                                               HorizontalAlignment="Left"
+                                               FontFamily="{StaticResource Roboto-Bold}"/>
+
+                                </Grid>
+                            </Border>
+                            
                         </Grid>
 
-                    </Grid>
+                    </ScrollViewer>
+
                 </Border>
 
             </Grid>

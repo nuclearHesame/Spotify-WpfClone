@@ -1,18 +1,8 @@
 ﻿using Spotify_WpfClone.MVVM.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Spotify_WpfClone.Core;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Spotify_WpfClone
 {
@@ -65,5 +55,34 @@ namespace Spotify_WpfClone
         }
 
         #endregion
+
+        private void btn_NPVClose_Click(object sender, RoutedEventArgs e)
+        {
+            cold_NowPlayingView.Width = GridLength.Auto;
+            grd_NowPlayingView.Visibility = Visibility.Collapsed;
+            grds_NPVSplitter.Visibility = Visibility.Collapsed;     
+        }
+
+
+
+        private void grd_NowPlayingView_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ScrollBar myScrollBar = FindChild.FindVisualChild<ScrollBar>(sclv_NPV);
+
+            if (myScrollBar != null)
+            {
+                myScrollBar.Opacity = 1.0;
+            }
+        }
+
+        private void grd_NowPlayingView_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ScrollBar myScrollBar = FindChild.FindVisualChild<ScrollBar>(sclv_NPV);
+
+            if (myScrollBar != null)
+            {
+                myScrollBar.Opacity = 0.0; 
+            }
+        }
     }
 }
